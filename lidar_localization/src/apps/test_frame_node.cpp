@@ -31,9 +31,9 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<TFListener> lidar_to_imu_ptr = std::make_shared<TFListener>(nh, "velo_link", "imu_link");
 
     std::shared_ptr<CloudPublisher> cloud_pub_ptr = std::make_shared<CloudPublisher>(nh, "current_scan", "/map", 100);
-    std::shared_ptr<OdometryPublisher> odom_pub_ptr = std::make_shared<OdometryPublisher>(nh, "lidar_odom", "/map", "/lidar", 100);
+    std::shared_ptr<OdometryPublisher> odom_pub_ptr = std::make_shared<OdometryPublisher>(nh, "lidar_odom", "map", "/lidar", 100);
 
-    std::deque<CloudData> cloud_data_buff;
+    std::deque<CloudData> cloud_data_buff;  // ，信息解析完之后是放在一个deque容器里的。
     std::deque<IMUData> imu_data_buff;
     std::deque<GNSSData> gnss_data_buff;
     Eigen::Matrix4f lidar_to_imu = Eigen::Matrix4f::Identity();
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
         cloud_sub_ptr->ParseData(cloud_data_buff);
         imu_sub_ptr->ParseData(imu_data_buff);
-        gnss_sub_ptr->ParseData(gnss_data_buff);
+        gnss_sub_ptr->ParseData(gnss_data_buff);  // 
 
         if (!transform_received) {
             if (lidar_to_imu_ptr->LookupData(lidar_to_imu)) {

@@ -27,7 +27,7 @@ void GNSSSubscriber::msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_
     buff_mutex_.unlock();
 }
 // 实现从类里取数据的功能
-void GNSSSubscriber::ParseData(std::deque<GNSSData>& gnss_data_buff) {
+void GNSSSubscriber::ParseData(std::deque<GNSSData>& gnss_data_buff) {   // 信息解析完之后是放在一个deque容器里的。
     buff_mutex_.lock();
     if (new_gnss_data_.size() > 0) {
         gnss_data_buff.insert(gnss_data_buff.end(), new_gnss_data_.begin(), new_gnss_data_.end());

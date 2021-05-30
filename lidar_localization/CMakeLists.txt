@@ -29,7 +29,7 @@ generate_messages(
    std_msgs
 )
 
-set(ALL_TARGET_LIBRARIES "")
+set(ALL_TARGET_LIBRARIES "")  # 为了避免target_link_libraries后面跟很长一串库的名字
 
 include(cmake/glog.cmake)
 include(cmake/YAML.cmake)
