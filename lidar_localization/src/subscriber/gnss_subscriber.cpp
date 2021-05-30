@@ -12,7 +12,7 @@ GNSSSubscriber::GNSSSubscriber(ros::NodeHandle& nh, std::string topic_name, size
     :nh_(nh) {
     subscriber_ = nh_.subscribe(topic_name, buff_size, &GNSSSubscriber::msg_callback, this);
 }
-
+// msg_callback就是它的callback函数，也就是接收和处理信息的地方
 void GNSSSubscriber::msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_fix_ptr) {
     buff_mutex_.lock();
     GNSSData gnss_data;
@@ -26,7 +26,7 @@ void GNSSSubscriber::msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_
     new_gnss_data_.push_back(gnss_data);
     buff_mutex_.unlock();
 }
-
+// 实现从类里取数据的功能
 void GNSSSubscriber::ParseData(std::deque<GNSSData>& gnss_data_buff) {
     buff_mutex_.lock();
     if (new_gnss_data_.size() > 0) {

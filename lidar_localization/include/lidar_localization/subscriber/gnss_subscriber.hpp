@@ -20,10 +20,10 @@ class GNSSSubscriber {
   public:
     GNSSSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size);
     GNSSSubscriber() = default;
-    void ParseData(std::deque<GNSSData>& deque_gnss_data);
+    void ParseData(std::deque<GNSSData>& deque_gnss_data);  // 实现从类里取数据的功能
 
   private:
-    void msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_fix_ptr);
+    void msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_fix_ptr);  // msg_callback就是它的callback函数，也就是接收和处理信息的地方
 
   private:
     ros::NodeHandle nh_;
