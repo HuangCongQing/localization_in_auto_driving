@@ -20,16 +20,16 @@ void CloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& clo
     cloud_data.time = cloud_msg_ptr->header.stamp.toSec();
     pcl::fromROSMsg(*cloud_msg_ptr, *(cloud_data.cloud_ptr));
 
-    new_cloud_data_.push_back(cloud_data);
+    new_cloud_data_.push_back(cloud_data); // 保存在new_cloud_data_
     buff_mutex_.unlock();
 }
-
+// 解析数据
 void CloudSubscriber::ParseData(std::deque<CloudData>& cloud_data_buff) {
-    buff_mutex_.lock();
+    buff_mutex_.lock();  // lock()，调用线程将锁住该互斥量
     if (new_cloud_data_.size() > 0) {
         cloud_data_buff.insert(cloud_data_buff.end(), new_cloud_data_.begin(), new_cloud_data_.end());
         new_cloud_data_.clear();
     }
-    buff_mutex_.unlock();
+    buff_mutex_.unlock();  // unlock()， 解锁，释放对互斥量的所有权
 }
 } // namespace data_input
